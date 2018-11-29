@@ -37,7 +37,22 @@ def python_code_analyzer():
 def find_pep8_violations():
     """Run pep8 python coding standard check
     """
-    info('Running coding standards check for python files...')
+    info(
+        'Running coding standards check for python files(switch to '
+        'pycodestyle is recommended)...'
+    )
+    return local(
+        "git ls-files -z | "
+        "grep -PZz '\.py$' | "
+        "xargs -0 pep8"
+    )
+
+
+@sniff(severity='minor', timing='slow')
+def find_pycodestyle_violations():
+    """Run pycodestyle python coding standard check
+    """
+    info('Running pycodestyle coding standards check for python files...')
     return local(
         "git ls-files -z | "
         "grep -PZz '\.py$' | "
